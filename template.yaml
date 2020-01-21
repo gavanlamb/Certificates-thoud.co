@@ -1,0 +1,32 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Stack for wild card certificate
+Parameters:
+    EnvironmentName:
+        Type: String
+        AllowedValues:
+            - integration
+            - testing
+            - staging
+            - production
+        Description: Environment name
+        Default: production
+    HostedZoneUrl:
+        Type: String
+        Description: Url of the hosted zone
+Resources:
+    CognitoDomainCertificate:
+        Type: AWS::CertificateManager::Certificate
+        Properties:
+            DomainName: !Sub '*.${HostedZoneUrl}'
+            DomainValidationOptions:
+                -   DomainName: !Sub '*.${HostedZoneUrl}'
+                    ValidationDomain: !Ref HostedZoneUrl
+            Tags:
+                -   Key: Environment
+                    Value: !Ref EnvironmentName
+                -   Key: Name
+                    Value: wild card certificate
+                -   Key: Service
+                    Value: wild card certificate
+            ValidationMethod: EMAIL
