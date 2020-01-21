@@ -14,6 +14,7 @@ Parameters:
     HostedZoneUrl:
         Type: String
         Description: Url of the hosted zone
+        Default: thoud.co
 Resources:
     CognitoDomainCertificate:
         Type: AWS::CertificateManager::Certificate
